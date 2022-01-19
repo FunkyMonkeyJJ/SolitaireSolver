@@ -5,25 +5,25 @@ from Suit import Suit
 from Card import Card
 
 
-class Deck:
+class Deck(list[Card]):
     def __init__(self):
-        self.cards = []
+        super().__init__()
         for face in Face:
             for suit in Suit:
-                self.cards.append(Card(face, suit))
+                self.append(Card(face, suit))
 
     def shuffle(self):
         for i in range(52):
             random1 = randint(0, 51)
             random2 = randint(0, 51)
-            card1 = self.cards[random1]
-            card2 = self.cards[random2]
-            self.cards[random2] = card1
-            self.cards[random1] = card2
+            card1 = self[random1]
+            card2 = self[random2]
+            self[random2] = card1
+            self[random1] = card2
         return self
 
     def __str__(self):
         string = '['
-        for card in self.cards:
+        for card in self:
             string += card.__str__() + ', '
         return string[0:len(string) - 2] + ']'

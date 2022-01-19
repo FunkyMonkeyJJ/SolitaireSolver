@@ -1,5 +1,6 @@
-from Deck import Deck
+from SolitaireDeck import *
 
 if __name__ == '__main__':
     deck = Deck().shuffle()
-    print(deck)
+    s_deck = SolitaireDeck(deck)
+    print(s_deck)
