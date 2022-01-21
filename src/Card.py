@@ -8,4 +8,4 @@ class Card:
         self.face = face
 
     def __str__(self):
-        return str.format("({0} of {1})".format(self.face, self.suit))
+        return str.format("{0}_of_{1}.png".format(self.face.value, self.suit))
