@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>MainWindow</class>
+    <widget class="QMainWindow" name="MainWindow">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>1000</width>
+                <height>650</height>
+            </rect>
+        </property>
+        <property name="maximumSize">
+            <size>
+                <width>16777215</width>
+                <height>16777215</height>
+            </size>
+        </property>
+        <property name="windowTitle">
+            <string>MainWindow</string>
+        </property>
+        <widget class="QWidget" name="central_widget">
+            <widget class="QWidget" name="card_sections" native="true">
+                <property name="geometry">
+                    <rect>
+                        <x>0</x>
+                        <y>0</y>
+                        <width>1000</width>
+                        <height>650</height>
+                    </rect>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout">
+                    <item>
+                        <layout class="QVBoxLayout" name="extra_pile">
+                            <property name="spacing">
+                                <number>0</number>
+                            </property>
+                            <property name="leftMargin">
+                                <number>15</number>
+                            </property>
+                            <property name="bottomMargin">
+                                <number>425</number>
+                            </property>
+                            <item>
+                                <widget class="QLabel" name="extra_card">
+                                    <property name="sizePolicy">
+                                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>100</width>
+                                            <height>150</height>
+                                        </size>
+                                    </property>
+                                    <property name="layoutDirection">
+                                        <enum>Qt::LeftToRight</enum>
+                                    </property>
+                                    <property name="text">
+                                        <string/>
+                                    </property>
+                                    <property name="pixmap">
+                                        <pixmap>resources\card_back.png</pixmap>
+                                    </property>
+                                    <property name="scaledContents">
+                                        <bool>true</bool>
+                                    </property>
+                                </widget>
+                            </item>
+                        </layout>
+                    </item>
+                    <item>
+                        <layout class="QHBoxLayout" name="sections">
+                            <property name="spacing">
+                                <number>20</number>
+                            </property>
+                            <item>
+                                <layout class="QVBoxLayout" name="first_pile">
+                                    <property name="spacing">
+                                        <number>0</number>
+                                    </property>
+                                    <item>
+                                        <widget class="QLabel" name="first_card">
+                                            <property name="sizePolicy">
+                                                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="maximumSize">
+                                                <size>
+                                                    <width>100</width>
+                                                    <height>150</height>
+                                                </size>
+                                            </property>
+                                            <property name="layoutDirection">
+                                                <enum>Qt::LeftToRight</enum>
+                                            </property>
+                                            <property name="text">
+                                                <string/>
+                                            </property>
+                                            <property name="pixmap">
+                                                <pixmap>resources\card_back.png</pixmap>
+                                            </property>
+                                            <property name="scaledContents">
+                                                <bool>true</bool>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                </layout>
+                            </item>
+                            <item>
+                                <layout class="QVBoxLayout" name="second_pile">
+                                    <property name="spacing">
+                                        <number>0</number>
+                                    </property>
+                                    <item>
+                                        <widget class="QLabel" name="second_card">
+                                            <property name="sizePolicy">
+                                                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="maximumSize">
+                                                <size>
+                                                    <width>100</width>
+                                                    <height>150</height>
+                                                </size>
+                                            </property>
+                                            <property name="layoutDirection">
+                                                <enum>Qt::LeftToRight</enum>
+                                            </property>
+                                            <property name="text">
+                                                <string/>
+                                            </property>
+                                            <property name="pixmap">
+                                                <pixmap>resources\card_back.png</pixmap>
+                                            </property>
+                                            <property name="scaledContents">
+                                                <bool>true</bool>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                </layout>
+                            </item>
+                            <item>
+                                <layout class="QVBoxLayout" name="third_pile">
+                                    <property name="spacing">
+                                        <number>0</number>
+                                    </property>
+                                    <item>
+                                        <widget class="QLabel" name="third_card">
+                                            <property name="sizePolicy">
+                                                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="maximumSize">
+                                                <size>
+                                                    <width>100</width>
+                                                    <height>150</height>
+                                                </size>
+                                            </property>
+                                            <property name="layoutDirection">
+                                                <enum>Qt::LeftToRight</enum>
+                                            </property>
+                                            <property name="text">
+                                                <string/>
+                                            </property>
+                                            <property name="pixmap">
+                                                <pixmap>resources\card_back.png</pixmap>
+                                            </property>
+                                            <property name="scaledContents">
+                                                <bool>true</bool>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                </layout>
+                            </item>
+                            <item>
+                                <layout class="QVBoxLayout" name="fourth_pile">
+                                    <property name="spacing">
+                                        <number>0</number>
+                                    </property>
+                                    <item>
+                                        <widget class="QLabel" name="fourth_card">
+                                            <property name="sizePolicy">
+                                                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>100</width>
+                                                    <height>150</height>
+                                                </size>
+                                            </property>
+                                            <property name="maximumSize">
+                                                <size>
+                                                    <width>100</width>
+                                                    <height>150</height>
+                                                </size>
+                                            </property>
+                                            <property name="layoutDirection">
+                                                <enum>Qt::LeftToRight</enum>
+                                            </property>
+                                            <property name="text">
+                                                <string/>
+                                            </property>
+                                            <property name="pixmap">
+                                                <pixmap>resources\card_back.png</pixmap>
+                                            </property>
+                                            <property name="scaledContents">
+                                                <bool>true</bool>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                </layout>
+                            </item>
+                            <item>
+                                <layout class="QVBoxLayout" name="fifth_pile">
+                                    <property name="spacing">
+                                        <number>0</number>
+                                    </property>
+                                    <item>
+                                        <widget class="QLabel" name="fifth_card">
+                                            <property name="sizePolicy">
+                                                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>100</width>
+                                                    <height>150</height>
+                                                </size>
+                                            </property>
+                                            <property name="maximumSize">
+                                                <size>
+                                                    <width>100</width>
+                                                    <height>150</height>
+                                                </size>
+                                            </property>
+                                            <property name="layoutDirection">
+                                                <enum>Qt::LeftToRight</enum>
+                                            </property>
+                                            <property name="text">
+                                                <string/>
+                                            </property>
+                                            <property name="pixmap">
+                                                <pixmap>resources\card_back.png</pixmap>
+                                            </property>
+                                            <property name="scaledContents">
+                                                <bool>true</bool>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                </layout>
+                            </item>
+                            <item>
+                                <layout class="QVBoxLayout" name="sixth_pile">
+                                    <property name="spacing">
+                                        <number>0</number>
+                                    </property>
+                                    <item>
+                                        <widget class="QLabel" name="sixth_card">
+                                            <property name="sizePolicy">
+                                                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="minimumSize">
+                                                <size>
+                                                    <width>100</width>
+                                                    <height>150</height>
+                                                </size>
+                                            </property>
+                                            <property name="maximumSize">
+                                                <size>
+                                                    <width>100</width>
+                                                    <height>150</height>
+                                                </size>
+                                            </property>
+                                            <property name="layoutDirection">
+                                                <enum>Qt::LeftToRight</enum>
+                                            </property>
+                                            <property name="text">
+                                                <string/>
+                                            </property>
+                                            <property name="pixmap">
+                                                <pixmap>resources\card_back.png</pixmap>
+                                            </property>
+                                            <property name="scaledContents">
+                                                <bool>true</bool>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                </layout>
+                            </item>
+                        </layout>
+                    </item>
+                    <item>
+                        <layout class="QVBoxLayout" name="suits">
+                            <property name="spacing">
+                                <number>0</number>
+                            </property>
+                            <property name="leftMargin">
+                                <number>20</number>
+                            </property>
+                            <item>
+                                <widget class="QLabel" name="spades">
+                                    <property name="sizePolicy">
+                                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>100</width>
+                                            <height>150</height>
+                                        </size>
+                                    </property>
+                                    <property name="layoutDirection">
+                                        <enum>Qt::LeftToRight</enum>
+                                    </property>
+                                    <property name="text">
+                                        <string/>
+                                    </property>
+                                    <property name="pixmap">
+                                        <pixmap>resources\card_back.png</pixmap>
+                                    </property>
+                                    <property name="scaledContents">
+                                        <bool>true</bool>
+                                    </property>
+                                </widget>
+                            </item>
+                            <item>
+                                <widget class="QLabel" name="hearts">
+                                    <property name="sizePolicy">
+                                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>100</width>
+                                            <height>150</height>
+                                        </size>
+                                    </property>
+                                    <property name="text">
+                                        <string/>
+                                    </property>
+                                    <property name="pixmap">
+                                        <pixmap>resources\card_back.png</pixmap>
+                                    </property>
+                                    <property name="scaledContents">
+                                        <bool>true</bool>
+                                    </property>
+                                </widget>
+                            </item>
+                            <item>
+                                <widget class="QLabel" name="clubs">
+                                    <property name="sizePolicy">
+                                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>100</width>
+                                            <height>150</height>
+                                        </size>
+                                    </property>
+                                    <property name="text">
+                                        <string/>
+                                    </property>
+                                    <property name="pixmap">
+                                        <pixmap>resources\card_back.png</pixmap>
+                                    </property>
+                                    <property name="scaledContents">
+                                        <bool>true</bool>
+                                    </property>
+                                </widget>
+                            </item>
+                            <item>
+                                <widget class="QLabel" name="diamonds">
+                                    <property name="sizePolicy">
+                                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>100</width>
+                                            <height>150</height>
+                                        </size>
+                                    </property>
+                                    <property name="text">
+                                        <string/>
+                                    </property>
+                                    <property name="pixmap">
+                                        <pixmap>resources\card_back.png</pixmap>
+                                    </property>
+                                    <property name="scaledContents">
+                                        <bool>true</bool>
+                                    </property>
+                                </widget>
+                            </item>
+                        </layout>
+                    </item>
+                </layout>
+            </widget>
+        </widget>
+    </widget>
+    <resources/>
+    <connections/>
+</ui>
