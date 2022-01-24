@@ -12,26 +12,34 @@ class SolitaireDeck(Deck):
         self.pile4 = Pile([deck.pop()])
         self.pile5 = Pile([deck.pop()])
         self.pile6 = Pile([deck.pop()])
+        self.pile7 = Pile([deck.pop()])
 
         self.pile2.append(deck.pop())
         self.pile3.append(deck.pop())
         self.pile4.append(deck.pop())
         self.pile5.append(deck.pop())
         self.pile6.append(deck.pop())
+        self.pile7.append(deck.pop())
 
         self.pile3.append(deck.pop())
         self.pile4.append(deck.pop())
         self.pile5.append(deck.pop())
         self.pile6.append(deck.pop())
+        self.pile7.append(deck.pop())
 
         self.pile4.append(deck.pop())
         self.pile5.append(deck.pop())
         self.pile6.append(deck.pop())
+        self.pile7.append(deck.pop())
 
         self.pile5.append(deck.pop())
         self.pile6.append(deck.pop())
+        self.pile7.append(deck.pop())
 
         self.pile6.append(deck.pop())
+        self.pile7.append(deck.pop())
+
+        self.pile7.append(deck.pop())
 
         # All extra cards are left in their own pile
         self.extra = Pile(deck, True)
