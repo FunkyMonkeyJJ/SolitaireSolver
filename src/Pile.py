@@ -9,10 +9,10 @@ class Pile(list[Card]):
         self.extra = extra
         self.face = face
 
-    def __str__(self):
-        if self.extra:
-            print('Only three cards, with one showing on top.')
-        elif self.face:
-            print('Only show the top card.')
-        else:
-            print('As many cards as in the pile, with one showing on top.')
+    # def __str__(self):
+    #     if self.extra:
+    #         print('Only three cards, with one showing on top.')
+    #     elif self.face:
+    #         print('Only show the top card.')
+    #     else:
+    #         print('As many cards as in the pile, with one showing on top.')
