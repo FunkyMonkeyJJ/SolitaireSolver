@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QLabel
 class CardImage(QLabel):
     def __init__(self, card, parent, widget):
         super().__init__(parent)
-        # True = Back showing
+        # True = Back showing; False = Face showing
         self.flipped = True
         self.card = card
         self.setSizePolicy(widget.sizePolicy())

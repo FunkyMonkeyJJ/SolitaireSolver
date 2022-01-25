@@ -1,14 +1,29 @@
-import array
 import sys
 
 import PyQt5
 from PyQt5 import uic
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
 
 from CardImage import *
-# from CardImage import CardImage
 from SolitaireDeck import *
+
+
+# 1
+# 2 8
+# 3 9  14
+# 4 10 15 19
+# 5 11 16 20 23
+# 6 12 17 21 24 26
+# 7 13 18 22 25 27 28
+
+# Returns the pile number for the given card number
+def find_pile_index(card_num):
+    if 6 >= card_num >= 0:
+        return card_num
+    piles = {7: 2, 8: 3, 9: 4, 14: 4, 10: 5, 15: 5, 19: 5, 11: 6,
+             16: 6, 20: 6, 23: 6, 12: 7, 17: 7, 21: 7, 24: 7,
+             26: 7, 13: 3, 18: 4, 22: 5, 25: 6, 27: 7}
+    return piles.get(card_num) - 1
 
 
 class SolitaireSolver(QMainWindow):
@@ -16,23 +31,35 @@ class SolitaireSolver(QMainWindow):
         super().__init__()
         uic.loadUi('solitaire.ui', self)
 
-        piles = {self.card1: s_deck.pile1, self.card8: s_deck.pile2,
-                 self.card14: s_deck.pile3, self.card19: s_deck.pile4,
-                 self.card23: s_deck.pile5, self.card26: s_deck.pile6,
-                 self.card28: s_deck.pile7, self.extra_card1: s_deck.extra}
-        for pile in piles:
-            first_card = piles[pile].__getitem__(len(piles[pile]) - 1)
-            pile.setPixmap(QPixmap(first_card.image_location()))
-
         playing_field = []
-        cards = self.playing_field.findChildren(PyQt5.QtWidgets.QLabel)
-        for i in range(len(cards)):
-            card_image = CardImage(s_deck[i], self.playing_field, cards[i])
+        for i in range(28):
+            qlabel_card = self.findChild(QLabel, 'card' + (i + 1).__str__())
+            pile_index = find_pile_index(i)
+            pile = s_deck.piles[pile_index].pop()
+            card_image = CardImage(pile, self.playing_field, qlabel_card)
+            if len(s_deck.piles[pile_index]) == 0:
+                card_image.flip()
             playing_field.append(card_image)
-            for pile in piles:
-                first_card = piles[pile].__getitem__(len(piles[pile]) - 1)
-                if first_card.image_location() == card_image.card.image_location():
-                    card_image.flip()
+
+        # extra = []
+        # for i in range(24):
+        #     qlabel_card = self.findChild(QLabel, 'extra_card' + (i + 1).__str__())
+        #     pile_index = find_pile_index(i)
+        #     pile = s_deck.piles[pile_index].pop()
+        #     card_image = CardImage(pile, self.extra, qlabel_card)
+        #     card_image.flip()
+        #     playing_field.append(card_image)
+
+        extra_card3 = self.findChild(QLabel, 'extra_card3')
+        extra_image3 = CardImage(s_deck.extra.pop(), self.extra_pile, extra_card3)
+        extra_image3.flip()
+        extra_card2 = self.findChild(QLabel, 'extra_card2')
+        extra_image2 = CardImage(s_deck.extra.pop(), self.extra_pile, extra_card2)
+        extra_image2.flip()
+        extra_card1 = self.findChild(QLabel, 'extra_card1')
+        extra_image1 = CardImage(s_deck.extra.pop(), self.extra_pile, extra_card1)
+        extra_image1.flip()
+
         self.show()
 
 
