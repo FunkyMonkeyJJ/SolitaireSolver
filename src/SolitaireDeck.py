@@ -32,14 +32,5 @@ class SolitaireDeck(Deck):
         self.clubs = Pile([], False, True)
         self.diamonds = Pile([], False, True)
 
-        print(self.piles[0])
-        print(self.piles[1])
-        print(self.piles[2])
-        print(self.piles[3])
-        print(self.piles[4])
-        print(self.piles[5])
-        print(self.piles[6])
-        print(self.extra)
-
     def __str__(self):
         return self.piles[0].__str__()

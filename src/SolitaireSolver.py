@@ -1,20 +1,12 @@
 import sys
 
-import PyQt5
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from CardImage import *
 from SolitaireDeck import *
 
-
-# 1
-# 2 8
-# 3 9  14
-# 4 10 15 19
-# 5 11 16 20 23
-# 6 12 17 21 24 26
-# 7 13 18 22 25 27 28
 
 # Returns the pile number for the given card number
 def find_pile_index(card_num):
@@ -31,6 +23,10 @@ class SolitaireSolver(QMainWindow):
         super().__init__()
         uic.loadUi('solitaire.ui', self)
 
+        self.setMaximumSize(self.size())
+        self.setWindowIcon(QIcon('resources\\solitaire_icon.png'))
+        self.setWindowTitle('Solitaire Solver')
+
         playing_field = []
         for i in range(28):
             qlabel_card = self.findChild(QLabel, 'card' + (i + 1).__str__())
@@ -40,15 +36,6 @@ class SolitaireSolver(QMainWindow):
             if len(s_deck.piles[pile_index]) == 0:
                 card_image.flip()
             playing_field.append(card_image)
-
-        # extra = []
-        # for i in range(24):
-        #     qlabel_card = self.findChild(QLabel, 'extra_card' + (i + 1).__str__())
-        #     pile_index = find_pile_index(i)
-        #     pile = s_deck.piles[pile_index].pop()
-        #     card_image = CardImage(pile, self.extra, qlabel_card)
-        #     card_image.flip()
-        #     playing_field.append(card_image)
 
         extra_card3 = self.findChild(QLabel, 'extra_card3')
         extra_image3 = CardImage(s_deck.extra.pop(), self.extra_pile, extra_card3)
