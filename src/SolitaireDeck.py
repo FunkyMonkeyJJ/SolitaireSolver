@@ -25,12 +25,19 @@ class SolitaireDeck(Deck):
         # All extra cards are left in their own pile
         self.extra = Pile(deck, True)
         self.copy_extra = self.extra
+        self.current_extra = 1
 
         # Piles where the cards go when they are found
         self.spades = Pile([], False, True)
         self.hearts = Pile([], False, True)
         self.clubs = Pile([], False, True)
         self.diamonds = Pile([], False, True)
+
+    def current_extra(self):
+        self.current_extra += 1
+        if self.current_extra > len(self.extra):
+            self.current_extra = 0
+        return self.current_extra
 
     def __str__(self):
         return self.piles[0].__str__()

@@ -8,6 +8,9 @@ from CardImage import *
 from SolitaireDeck import *
 
 
+s_deck = []
+
+
 # Returns the pile number for the given card number
 def find_pile_index(card_num):
     if 6 >= card_num >= 0:
