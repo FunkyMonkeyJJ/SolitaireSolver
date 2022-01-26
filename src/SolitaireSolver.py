@@ -32,19 +32,19 @@ class SolitaireSolver(QMainWindow):
             qlabel_card = self.findChild(QLabel, 'card' + (i + 1).__str__())
             pile_index = find_pile_index(i)
             pile = s_deck.piles[pile_index].pop()
-            card_image = CardImage(pile, self.playing_field, qlabel_card)
+            card_image = CardImage(pile, self.cards, qlabel_card)
             if len(s_deck.piles[pile_index]) == 0:
                 card_image.flip()
             playing_field.append(card_image)
 
         extra_card3 = self.findChild(QLabel, 'extra_card3')
-        extra_image3 = CardImage(s_deck.extra.pop(), self.extra_pile, extra_card3)
+        extra_image3 = CardImage(s_deck.extra.pop(), self.cards, extra_card3)
         extra_image3.flip()
         extra_card2 = self.findChild(QLabel, 'extra_card2')
-        extra_image2 = CardImage(s_deck.extra.pop(), self.extra_pile, extra_card2)
+        extra_image2 = CardImage(s_deck.extra.pop(), self.cards, extra_card2)
         extra_image2.flip()
         extra_card1 = self.findChild(QLabel, 'extra_card1')
-        extra_image1 = CardImage(s_deck.extra.pop(), self.extra_pile, extra_card1)
+        extra_image1 = CardImage(s_deck.extra.pop(), self.cards, extra_card1)
         extra_image1.flip()
 
         self.show()

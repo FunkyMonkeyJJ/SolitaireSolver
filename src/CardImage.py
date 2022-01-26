@@ -9,8 +9,6 @@ from PyQt5.QtWidgets import QLabel
 # Replaces the current QLabel on the GUI, links information
 # to the new QLabel, and creates custom events
 class CardImage(QLabel):
-    moving_memory = 0
-
     def __init__(self, card, parent, widget):
         super().__init__(parent)
         # True = Back showing; False = Face showing
@@ -51,6 +49,7 @@ class CardImage(QLabel):
     def mousePressEvent(self, ev: QtGui.QMouseEvent) -> None:
         if not self.flipped and not self.is_covered():
             self.moving = True
+            self.raise_()
 
     def mouseMoveEvent(self, ev: QtGui.QMouseEvent) -> None:
         if self.moving:
