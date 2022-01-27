@@ -1,19 +1,18 @@
-import os
-
 from PyQt5 import QtGui
 from PyQt5.QtCore import QPoint
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QLabel, QWidget
 
-import SolitaireSolver
-from Face import *
+from SolitaireSolver import *
 
 
 # Replaces the current QLabel on the GUI, links information
 # to the new QLabel, and creates custom events
 class CardImage(QLabel):
-    def __init__(self, card, parent, widget):
+    def __init__(self, card, parent, widget, replace=True):
         super().__init__(parent)
+        print(SolitaireSolver.s_deck.extra)
+
         # True = Back showing; False = Face showing
         self.is_flipped = True
         self.is_moving = False
@@ -28,7 +27,8 @@ class CardImage(QLabel):
         self.position = (self.geometry().x(), self.geometry().y())
 
         # Deletes the base widget from the GUI
-        widget.setParent(None)
+        if replace:
+            widget.setParent(None)
 
     # Changes image of card to front/back respectively
     # Cards with the back facing cannot be moved
@@ -43,22 +43,21 @@ class CardImage(QLabel):
     # Covered by another card; cannot be moved
     def is_covered(self):
         for card in self.parent().findChildren(QLabel):
-            pos1 = self.pos()
-            pos2 = card.pos()
             # In same pile and on top of pile
-            if abs(pos1.x() - pos2.x()) == 0 and pos2.y() > pos1.y():
-                if card.is_flipped or card.pos().x() < 120:
+            if abs(self.x() - card.x()) == 0 and card.y() > self.y():
+                if card.is_flipped or card.x() < 120:
                     return True
         return False
 
     def mousePressEvent(self, ev: QtGui.QMouseEvent) -> None:
         if not self.is_flipped and not self.is_covered():
+            # Prepares card for moving
             self.is_moving = True
             self.raise_()
+
+            # Prepares the cards below the card for moving
             for card in self.parent().findChildren(QLabel):
-                pos1 = self.pos()
-                pos2 = card.pos()
-                if abs(pos1.x() - pos2.x()) == 0 and pos2.y() > pos1.y():
+                if abs(self.x() - card.x()) == 0 and card.y() > self.y():
                     self.cards_below.append(card)
                     card.raise_()
 
@@ -80,12 +79,12 @@ class CardImage(QLabel):
         # Searches for the closest card in the nearest pile
         closest_card = None
         for card in self.parent().findChildren(QLabel):
-            if 39 > abs(card.pos().x() - self.pos().x()) > 0:
+            if 39 > abs(card.x() - self.x()) > 0:
                 if card.card.is_red() == self.card.is_red():
                     continue
                 if card.card.face.value - self.card.face.value != 1:
                     continue
-                if card.pos().x() < 120:
+                if card.x() < 120:
                     continue
                 if card.is_flipped:
                     continue
@@ -95,25 +94,38 @@ class CardImage(QLabel):
         moved = False
         if closest_card is not None:
             # Moves the card to its new location
-            pos = closest_card.pos()
-            self.move(pos.x(), pos.y() + 20)
-            self.position = (pos.x(), pos.y() + 20)
+            self.move(closest_card.x(), closest_card.y() + 20)
+            self.position = (closest_card.x(), closest_card.y() + 20)
 
             # Moves all the cards below to their new location
             times_to_add = 0
             for card in self.cards_below:
                 times_to_add += 1
                 prev_pos = self.pos().__add__(QPoint(-50, -75 + (20 * times_to_add)))
-                card.move(self.mapToParent(prev_pos))
+                card.move(card.mapToGlobal(prev_pos))  # Something is wrong here that shifts the cards
                 card.position = (prev_pos.x(), prev_pos.y())
+                # TODO: Something is going wrong here with the movement when there are
+                #  at least two cards stacked on another. The third or more cards are
+                #  moved to the right ~200 units...
 
             self.cards_below.clear()
             moved = True
 
         # Handles King's being dropped in empty spaces
         if self.card.face == Face.KING:
-            print("King should just drop into the spot and align.")
-            moved = True
+            for x_coord in [140, 260, 380, 500, 620, 740, 860]:
+                if abs(self.x() - x_coord) <= 20:
+                    card_in_spot = False
+                    for card in self.parent().findChildren(QLabel):
+                        if card.x() == x_coord and card.y() == 20:
+                            card_in_spot = True
+
+                    if not card_in_spot:
+                        self.geometry().setX(x_coord)
+                        self.geometry().setY(20)
+                        self.move(x_coord, 20)
+                        self.position = self.x(), self.y()
+                        moved = True
 
         # Moves all cards back if no available spot
         if not moved:
@@ -126,18 +138,26 @@ class CardImage(QLabel):
         # Flips next card
         extra_card_pulled = False
         for card in self.parent().findChildren(QLabel):
-            if prev_location[0] == card.pos().x():
-                if prev_location[1] - 20 == card.pos().y() and card.is_flipped:
+            if prev_location[0] == card.x():
+                if prev_location[1] - 20 == card.y() and card.is_flipped:
                     card.flip()
                     return
-                elif card.pos().x() < 120:
+                elif card.x() < 120:
                     # Handles Extra Card Pull
-                    new_point = card.pos().__add__(QPoint(0, 20))
-                    card.move(new_point)
-                    card.position = (new_point.x(), new_point.y())
-                    if extra_card_pulled:
-                        print("Handling Extra Card Pull")
-                        # CardImage(SolitaireSolver.s_deck.current_extra(), SolitaireSolver.solitaire_solver.cards, ...)
+                    card.move(card.pos().__add__(QPoint(0, 20)))
+                    card.position = (card.x(), card.y())
+                    if not extra_card_pulled:
+                        new_card = CardImage(SolitaireSolver.s_deck.current_extra(),
+                                             self.parent().findChild(QWidget, 'cards'), card, False)
+                        new_card.move(card.pos().__add__(QPoint(0, -40)))
+                        new_card.position = (new_card.x(), new_card.y())
+                        print(SolitaireSolver.s_deck.extra)
+                        print(self.card)
+
+                        if SolitaireSolver.s_deck.extra.__contains__(self.card):
+                            SolitaireSolver.s_deck.extra.remove(self.card)
+                        extra_card_pulled = True
+
                         # Needs some way to get a QWidget that it can copy and delete
                         # Try to copy QWidget below where this one is supposed to go, then edit it
 

@@ -2,13 +2,11 @@ import sys
 
 from PyQt5 import uic
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
 
 from CardImage import *
+from Deck import *
 from SolitaireDeck import *
-
-
-s_deck = []
 
 
 # Returns the pile number for the given card number
@@ -22,6 +20,9 @@ def find_pile_index(card_num):
 
 
 class SolitaireSolver(QMainWindow):
+    deck = Deck().shuffle()
+    s_deck = SolitaireDeck(deck)
+
     def __init__(self):
         super().__init__()
         uic.loadUi('solitaire.ui', self)
@@ -30,32 +31,34 @@ class SolitaireSolver(QMainWindow):
         self.setWindowIcon(QIcon('resources\\solitaire_icon.png'))
         self.setWindowTitle('Solitaire Solver')
 
-        playing_field = []
         for i in range(28):
             qlabel_card = self.findChild(QLabel, 'card' + (i + 1).__str__())
             pile_index = find_pile_index(i)
-            pile = s_deck.piles[pile_index].pop()
+            pile = self.s_deck.piles[pile_index].pop()
             card_image = CardImage(pile, self.cards, qlabel_card)
-            if len(s_deck.piles[pile_index]) == 0:
+            if len(self.s_deck.piles[pile_index]) == 0:
                 card_image.flip()
-            playing_field.append(card_image)
 
-        extra_card3 = self.findChild(QLabel, 'extra_card3')
-        extra_image3 = CardImage(s_deck.extra.pop(), self.cards, extra_card3)
-        extra_image3.flip()
-        extra_card2 = self.findChild(QLabel, 'extra_card2')
-        extra_image2 = CardImage(s_deck.extra.pop(), self.cards, extra_card2)
-        extra_image2.flip()
         extra_card1 = self.findChild(QLabel, 'extra_card1')
-        extra_image1 = CardImage(s_deck.extra.pop(), self.cards, extra_card1)
+        extra_image1 = CardImage(self.s_deck.current_extra(), self.cards, extra_card1)
         extra_image1.flip()
+        extra_card2 = self.findChild(QLabel, 'extra_card2')
+        extra_image2 = CardImage(self.s_deck.current_extra(), self.cards, extra_card2)
+        extra_image2.flip()
+        extra_card3 = self.findChild(QLabel, 'extra_card3')
+        extra_image3 = CardImage(self.s_deck.current_extra(), self.cards, extra_card3)
+        extra_image3.flip()
+        extra_image2.raise_()
+        extra_image1.raise_()
+
+        print(self.s_deck.extra)
+        print(SolitaireSolver.s_deck.extra)
 
         self.show()
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    deck = Deck().shuffle()
-    s_deck = SolitaireDeck(deck)
     solitaire_solver = SolitaireSolver()
+    print(SolitaireSolver.s_deck.extra)
     sys.exit(app.exec_())

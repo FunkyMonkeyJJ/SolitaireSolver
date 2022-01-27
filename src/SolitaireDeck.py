@@ -1,8 +1,7 @@
-from Deck import *
 from Pile import *
 
 
-class SolitaireDeck(Deck):
+class SolitaireDeck:
     def __init__(self, deck):
         super().__init__()
 
@@ -23,21 +22,19 @@ class SolitaireDeck(Deck):
             j += 1
 
         # All extra cards are left in their own pile
-        self.extra = Pile(deck, True)
-        self.copy_extra = self.extra
-        self.current_extra = 1
+        self.extra = Pile(deck)
+        # self.copy_extra = self.extra
+        self.extra_iter = 0
 
         # Piles where the cards go when they are found
-        self.spades = Pile([], False, True)
-        self.hearts = Pile([], False, True)
-        self.clubs = Pile([], False, True)
-        self.diamonds = Pile([], False, True)
+        self.spades = Pile([])
+        self.hearts = Pile([])
+        self.clubs = Pile([])
+        self.diamonds = Pile([])
 
     def current_extra(self):
-        self.current_extra += 1
-        if self.current_extra > len(self.extra):
-            self.current_extra = 0
-        return self.current_extra
-
-    def __str__(self):
-        return self.piles[0].__str__()
+        if self.extra_iter >= len(self.extra):
+            self.extra_iter = 0
+        next_card = self.extra[self.extra_iter]
+        self.extra_iter += 1
+        return next_card

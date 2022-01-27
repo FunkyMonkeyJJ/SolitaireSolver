@@ -2,12 +2,10 @@ from Card import *
 
 
 class Pile(list[Card]):
-    def __init__(self, deck, extra=False, face=False):
+    def __init__(self, deck):
         super().__init__()
         for card in deck:
             self.append(card)
-        self.extra = extra
-        self.face = face
 
     def __str__(self):
         string = '['
