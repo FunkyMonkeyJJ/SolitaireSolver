@@ -11,6 +11,7 @@ from SolitaireSolver import *
 class CardImage(QLabel):
     def __init__(self, card, parent, widget, replace=True):
         super().__init__(parent)
+        print(SolitaireSolver.s_deck)
         print(SolitaireSolver.s_deck.extra)
 
         # True = Back showing; False = Face showing
@@ -72,6 +73,8 @@ class CardImage(QLabel):
                 card.move(self.mapToParent(ev.pos().__add__(QPoint(-50, 20 * times_to_add))))
                 times_to_add += 1
 
+    # TODO: Still need to add the suits piles on the right
+    #  Currently it crashes when you try to lay something there
     def mouseReleaseEvent(self, ev: QtGui.QMouseEvent) -> None:
         self.is_moving = False
         prev_location = (self.position[0], self.position[1])
@@ -162,8 +165,9 @@ class CardImage(QLabel):
                             SolitaireSolver.s_deck.extra.remove(self.card)
                         extra_card_pulled = True
 
-                        # Needs some way to get a QWidget that it can copy and delete
-                        # Try to copy QWidget below where this one is supposed to go, then edit it
+                        # TODO: s_deck changes somehow, and I don't understand why
+                        # TODO: Needs some way to get a QWidget that it can copy and delete
+                        #  Try to copy QWidget below where this one is supposed to go, then edit it
 
                         # Delete the card that was pulled from s_deck
                     continue

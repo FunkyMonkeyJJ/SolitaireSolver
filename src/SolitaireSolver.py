@@ -51,8 +51,13 @@ class SolitaireSolver(QMainWindow):
         extra_image2.raise_()
         extra_image1.raise_()
 
-        print(self.s_deck.extra)
-        print(SolitaireSolver.s_deck.extra)
+        # TODO: Somewhere between line 49 and line 56, there is a change
+        #  in the location in memory of the SolitaireSolver.s_deck, which
+        #  leads to there being a completely different shuffled deck being
+        #  called in the three places after line 49.
+
+        print(self.s_deck)
+        print(SolitaireSolver.s_deck)
 
         self.show()
 

@@ -38,3 +38,6 @@ class SolitaireDeck:
         next_card = self.extra[self.extra_iter]
         self.extra_iter += 1
         return next_card
+
+    def __str__(self):
+        return super().__str__()
