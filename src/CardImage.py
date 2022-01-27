@@ -98,15 +98,12 @@ class CardImage(QLabel):
             self.position = (closest_card.x(), closest_card.y() + 20)
 
             # Moves all the cards below to their new location
-            times_to_add = 0
+            times_to_add = 1
             for card in self.cards_below:
                 times_to_add += 1
-                prev_pos = self.pos().__add__(QPoint(-50, -75 + (20 * times_to_add)))
-                card.move(card.mapToGlobal(prev_pos))  # Something is wrong here that shifts the cards
+                prev_pos = closest_card.pos().__add__(QPoint(0, 20 * times_to_add))
+                card.move(prev_pos)
                 card.position = (prev_pos.x(), prev_pos.y())
-                # TODO: Something is going wrong here with the movement when there are
-                #  at least two cards stacked on another. The third or more cards are
-                #  moved to the right ~200 units...
 
             self.cards_below.clear()
             moved = True
@@ -120,11 +117,18 @@ class CardImage(QLabel):
                         if card.x() == x_coord and card.y() == 20:
                             card_in_spot = True
 
-                    if not card_in_spot:
-                        self.geometry().setX(x_coord)
-                        self.geometry().setY(20)
+                    if not card_in_spot and self.position[0] != x_coord:
                         self.move(x_coord, 20)
-                        self.position = self.x(), self.y()
+                        self.position = (self.x(), self.y())
+
+                        # Moves all the cards below to their new location
+                        times_to_add = 0
+                        for card in self.cards_below:
+                            times_to_add += 1
+                            prev_pos = self.pos().__add__(QPoint(0, 20 * times_to_add))
+                            card.move(prev_pos)
+                            card.position = (prev_pos.x(), prev_pos.y())
+
                         moved = True
 
         # Moves all cards back if no available spot
