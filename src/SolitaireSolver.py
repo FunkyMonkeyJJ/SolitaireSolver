@@ -53,5 +53,5 @@ class SolitaireSolver(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    solitaire_solver = SolitaireSolver()
+    SolitaireSolver()
     sys.exit(app.exec_())

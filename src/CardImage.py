@@ -1,11 +1,9 @@
-import os
-
 from PyQt5 import QtGui
 from PyQt5.QtCore import QPoint
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QLabel, QWidget
 
-from Face import *
+from Card import *
 
 
 # Replaces the current QLabel on the GUI, links information
@@ -46,7 +44,7 @@ class CardImage(QLabel):
 
     # Covered by another card; cannot be moved
     def is_covered(self):
-        for card in self.parent().findChildren(QLabel):
+        for card in self.parent().findChildren(CardImage):
             # In same pile and on top of pile
             if abs(self.x() - card.x()) == 0 and card.y() > self.y():
                 if card.is_flipped or card.x() < 120:
@@ -59,8 +57,13 @@ class CardImage(QLabel):
             self.is_moving = True
             self.raise_()
 
+            # Prevents Ace's from being moved from suits piles
+            if self.card.face == Face.ACE and self.x() > 880:
+                self.is_moving = False
+                return
+
             # Prepares the cards below the card for moving
-            for card in self.parent().findChildren(QLabel):
+            for card in self.parent().findChildren(CardImage):
                 if abs(self.x() - card.x()) == 0 and card.y() > self.y():
                     self.cards_below.append(card)
                     card.raise_()
@@ -76,24 +79,40 @@ class CardImage(QLabel):
                 card.move(self.mapToParent(ev.pos().__add__(QPoint(-50, 20 * times_to_add))))
                 times_to_add += 1
 
-    # TODO: Still need to add the suits piles on the right
-    #  Currently it crashes when you try to lay something there
+    # TODO: Last thing to do is to cycle through the extra pile
     def mouseReleaseEvent(self, ev: QtGui.QMouseEvent) -> None:
         self.is_moving = False
         prev_location = (self.position[0], self.position[1])
 
         # Searches for the closest card in the nearest pile
         closest_card = None
+        laying_on_suits = False
         for card in self.parent().findChildren(QLabel):
+            if closest_card is not None:
+                break
             if 39 > abs(card.x() - self.x()) > 0:
-                if card is not CardImage:
-                    print("Found a regular QLabel")
+                if card.x() < 120:
+                    continue
+                if card.x() > 880:
+                    if len(self.cards_below) > 0:
+                        continue
+
+                    if card.y() == 20 and self.card.suit == Suit.SPADES:
+                        closest_card = card
+                    elif card.y() == 180 and self.card.suit == Suit.HEARTS:
+                        closest_card = card
+                    elif card.y() == 340 and self.card.suit == Suit.CLUBS:
+                        closest_card = card
+                    elif card.y() == 500 and self.card.suit == Suit.DIAMONDS:
+                        closest_card = card
+                    else:
+                        continue
+
+                    laying_on_suits = True
                     continue
                 if card.card.is_red() == self.card.is_red():
                     continue
                 if card.card.face.value - self.card.face.value != 1:
-                    continue
-                if card.x() < 120:
                     continue
                 if card.is_flipped:
                     continue
@@ -101,7 +120,7 @@ class CardImage(QLabel):
 
         # If there is a card to move to
         moved = False
-        if closest_card is not None:
+        if closest_card is not None and not laying_on_suits:
             # Moves the card to its new location
             self.move(closest_card.x(), closest_card.y() + 20)
             self.position = (closest_card.x(), closest_card.y() + 20)
@@ -140,6 +159,22 @@ class CardImage(QLabel):
 
                         moved = True
 
+        # Handles placing on suits piles
+        if laying_on_suits:
+            try:
+                if self.card.face == Face.ACE:
+                    self.move(closest_card.x(), closest_card.y())
+                    self.position = (self.x(), self.y())
+                    closest_card.setParent(None)
+                    moved = True
+
+                if self.card.face.value - closest_card.card.face.value == 1:
+                    self.move(closest_card.x(), closest_card.y())
+                    self.position = (self.x(), self.y())
+                    moved = True
+            except:
+                pass
+
         # Moves all cards back if no available spot
         if not moved:
             self.move(self.position[0], self.position[1])
@@ -150,7 +185,7 @@ class CardImage(QLabel):
 
         # Flips next card
         extra_card_pulled = False
-        for card in self.parent().findChildren(QLabel):
+        for card in self.parent().findChildren(CardImage):
             if prev_location[0] == card.x():
                 if prev_location[1] - 20 == card.y() and card.is_flipped:
                     card.flip()
@@ -169,10 +204,6 @@ class CardImage(QLabel):
                         if self.solitaire_solver.s_deck.extra.__contains__(self.card):
                             self.solitaire_solver.s_deck.extra.remove(self.card)
                         extra_card_pulled = True
-
-                        # TODO: s_deck changes somehow, and I don't understand why
-                        # TODO: Needs some way to get a QWidget that it can copy and delete
-                        #  Try to copy QWidget below where this one is supposed to go, then edit it
 
                         # Delete the card that was pulled from s_deck
                     continue

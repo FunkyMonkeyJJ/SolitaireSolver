@@ -5,7 +5,7 @@ from Suit import Suit
 
 
 class Card:
-    def __init__(self, face=Face.ACE, suit=Suit.SPADES):
+    def __init__(self, face, suit):
         self.suit = suit
         self.face = face
 

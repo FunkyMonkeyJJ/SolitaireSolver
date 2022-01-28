@@ -1,8 +1,6 @@
 from random import randint
 
-from Face import Face
-from Suit import Suit
-from Card import Card
+from Card import *
 
 
 class Deck(list[Card]):
