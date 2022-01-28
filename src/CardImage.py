@@ -1,18 +1,18 @@
+import os
+
 from PyQt5 import QtGui
 from PyQt5.QtCore import QPoint
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QLabel, QWidget
 
-from SolitaireSolver import *
+from Face import *
 
 
 # Replaces the current QLabel on the GUI, links information
 # to the new QLabel, and creates custom events
 class CardImage(QLabel):
-    def __init__(self, card, parent, widget, replace=True):
+    def __init__(self, card, parent, widget, solitaire_solver, replace=True):
         super().__init__(parent)
-        print(SolitaireSolver.s_deck)
-        print(SolitaireSolver.s_deck.extra)
 
         # True = Back showing; False = Face showing
         self.is_flipped = True
@@ -26,6 +26,9 @@ class CardImage(QLabel):
         self.setPixmap(widget.pixmap())
         self.setGeometry(widget.geometry())
         self.position = (self.geometry().x(), self.geometry().y())
+
+        # Replaces my static use of SolitaireSolver before
+        self.solitaire_solver = solitaire_solver
 
         # Deletes the base widget from the GUI
         if replace:
@@ -83,6 +86,9 @@ class CardImage(QLabel):
         closest_card = None
         for card in self.parent().findChildren(QLabel):
             if 39 > abs(card.x() - self.x()) > 0:
+                if card is not CardImage:
+                    print("Found a regular QLabel")
+                    continue
                 if card.card.is_red() == self.card.is_red():
                     continue
                 if card.card.face.value - self.card.face.value != 1:
@@ -154,15 +160,14 @@ class CardImage(QLabel):
                     card.move(card.pos().__add__(QPoint(0, 20)))
                     card.position = (card.x(), card.y())
                     if not extra_card_pulled:
-                        new_card = CardImage(SolitaireSolver.s_deck.current_extra(),
-                                             self.parent().findChild(QWidget, 'cards'), card, False)
+                        new_card = CardImage(self.solitaire_solver.s_deck.current_extra(),
+                                             self.parent().findChild(QWidget, 'cards'), card,
+                                             self.solitaire_solver, False)
                         new_card.move(card.pos().__add__(QPoint(0, -40)))
                         new_card.position = (new_card.x(), new_card.y())
-                        print(SolitaireSolver.s_deck.extra)
-                        print(self.card)
 
-                        if SolitaireSolver.s_deck.extra.__contains__(self.card):
-                            SolitaireSolver.s_deck.extra.remove(self.card)
+                        if self.solitaire_solver.s_deck.extra.__contains__(self.card):
+                            self.solitaire_solver.s_deck.extra.remove(self.card)
                         extra_card_pulled = True
 
                         # TODO: s_deck changes somehow, and I don't understand why

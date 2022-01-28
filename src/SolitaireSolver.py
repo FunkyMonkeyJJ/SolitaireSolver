@@ -2,7 +2,7 @@ import sys
 
 from PyQt5 import uic
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
+from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from CardImage import *
 from Deck import *
@@ -20,44 +20,33 @@ def find_pile_index(card_num):
 
 
 class SolitaireSolver(QMainWindow):
-    deck = Deck().shuffle()
-    s_deck = SolitaireDeck(deck)
-
     def __init__(self):
         super().__init__()
         uic.loadUi('solitaire.ui', self)
+
+        deck = Deck().shuffle()
+        self.s_deck = SolitaireDeck(deck)
 
         self.setMaximumSize(self.size())
         self.setWindowIcon(QIcon('resources\\solitaire_icon.png'))
         self.setWindowTitle('Solitaire Solver')
 
+        # Generates and replaces each QLabel in the 7 piles
         for i in range(28):
             qlabel_card = self.findChild(QLabel, 'card' + (i + 1).__str__())
             pile_index = find_pile_index(i)
             pile = self.s_deck.piles[pile_index].pop()
-            card_image = CardImage(pile, self.cards, qlabel_card)
+            card_image = CardImage(pile, self.cards, qlabel_card, self)
             if len(self.s_deck.piles[pile_index]) == 0:
                 card_image.flip()
 
-        extra_card1 = self.findChild(QLabel, 'extra_card1')
-        extra_image1 = CardImage(self.s_deck.current_extra(), self.cards, extra_card1)
-        extra_image1.flip()
-        extra_card2 = self.findChild(QLabel, 'extra_card2')
-        extra_image2 = CardImage(self.s_deck.current_extra(), self.cards, extra_card2)
-        extra_image2.flip()
-        extra_card3 = self.findChild(QLabel, 'extra_card3')
-        extra_image3 = CardImage(self.s_deck.current_extra(), self.cards, extra_card3)
-        extra_image3.flip()
-        extra_image2.raise_()
-        extra_image1.raise_()
-
-        # TODO: Somewhere between line 49 and line 56, there is a change
-        #  in the location in memory of the SolitaireSolver.s_deck, which
-        #  leads to there being a completely different shuffled deck being
-        #  called in the three places after line 49.
-
-        print(self.s_deck)
-        print(SolitaireSolver.s_deck)
+        # Generates and replaces the extra pile cards
+        for i in range(3):
+            extra_card = self.findChild(QLabel, 'extra_card' + abs(i - 3).__str__())
+            extra_image = CardImage(self.s_deck.current_extra(), self.cards,
+                                    extra_card, self)
+            extra_image.flip()
+            extra_image.raise_()
 
         self.show()
 
@@ -65,5 +54,4 @@ class SolitaireSolver(QMainWindow):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     solitaire_solver = SolitaireSolver()
-    print(SolitaireSolver.s_deck.extra)
     sys.exit(app.exec_())
