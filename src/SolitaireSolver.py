@@ -2,11 +2,11 @@ import sys
 
 from PyQt5 import uic
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
 
-from CardImage import *
 from Deck import *
 from SolitaireDeck import *
+from Stack import *
 
 
 # Returns the pile number for the given card number
@@ -40,15 +40,33 @@ class SolitaireSolver(QMainWindow):
             if len(self.s_deck.piles[pile_index]) == 0:
                 card_image.flip()
 
-        # Generates and replaces the extra pile cards
-        for i in range(3):
-            extra_card = self.findChild(QLabel, 'extra_card' + abs(i - 3).__str__())
-            extra_image = CardImage(self.s_deck.current_extra(), self.cards,
-                                    extra_card, self)
-            extra_image.flip()
-            extra_image.raise_()
+        # Generates and replaces each QLabel in the extra pile
+        self.extra_cards = Stack()
+        for i in range(24):
+            qlabel_card = self.findChild(QLabel, 'extra_card' + (i + 1).__str__())
+            extra_card = self.s_deck.draw_extra()
+            card_image = CardImage(extra_card, self.cards, qlabel_card, self)
+            self.extra_cards.append(card_image)
+            # if i == 23:
+            #     self.extra_cards.starting_card = card_image
+            #     print(card_image.card)
+        print(self.extra_cards)
+
+        self.extra_cards_button.clicked.connect(self.reset_extra_cards)
 
         self.show()
+
+    def reset_extra_cards(self):
+        print(self.extra_cards)
+        temp_head = self.extra_cards.tail
+        while temp_head is not None:
+            card = temp_head.value
+            card.move(20, 20)
+            card.flip()
+            temp_head = temp_head.next
+        # for card in self.extra_cards:
+        #     card.move(20, 20)
+        #     card.flip()
 
 
 if __name__ == '__main__':

@@ -1,7 +1,7 @@
 from PyQt5 import QtGui
 from PyQt5.QtCore import QPoint
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QLabel, QWidget
+from PyQt5.QtWidgets import QLabel, QWidget, QFrame
 
 from Card import *
 
@@ -22,6 +22,7 @@ class CardImage(QLabel):
         self.setScaledContents(True)
         self.setMinimumSize(widget.minimumSize())
         self.setPixmap(widget.pixmap())
+        self.setObjectName(widget.objectName())
         self.setGeometry(widget.geometry())
         self.position = (self.geometry().x(), self.geometry().y())
 
@@ -47,12 +48,55 @@ class CardImage(QLabel):
         for card in self.parent().findChildren(CardImage):
             # In same pile and on top of pile
             if abs(self.x() - card.x()) == 0 and card.y() > self.y():
-                if card.is_flipped or card.x() < 120:
+                if card.isEnabled() and (card.is_flipped or card.x() < 120):
                     return True
         return False
 
     def mousePressEvent(self, ev: QtGui.QMouseEvent) -> None:
-        if not self.is_flipped and not self.is_covered():
+        if self.is_flipped and self.x() < 120:
+            # Handle clicking the extra card pile
+            # i = 0
+            print("CLICKED!")
+            # TODO: Now that the cards will not repeat without breaking, and you always press the reset button
+            #  you need to make it so that the number of cards that can't be repeated are found and pushed back to the
+            #  top of the extra pile
+            extra_cards = self.solitaire_solver.extra_cards
+            next_three = extra_cards.draw_three()
+
+            # print(len(next_three))
+            # print(len(extra_cards))
+            # Might need to pop and move the card around because it is being moved in next_three, but not extra_cards
+            if len(next_three) == 2 and len(extra_cards) > 2:
+                # Add one card back to the next three
+                next_three.insert(0, extra_cards[2])
+            elif len(next_three) == 1:
+                if len(extra_cards) > 2:
+                    # Add two cards back to the next three
+                    next_three.insert(0, extra_cards[2])
+                    next_three.insert(0, extra_cards[1])
+                elif len(extra_cards) > 1:
+                    # Add one card back to the next three
+                    next_three.insert(0, extra_cards[1])
+
+            for i in range(len(next_three)):
+                card = next_three.pop().value
+                # for card in next_three:
+                #     if card == extra_cards.tail.value and i > 0:
+                #         print("Card == tail")
+                #         break
+                # if len(extra_cards) > 2:
+                #     first_card_back = extra_cards[2]
+                #     first_card_back.move(20, 180)
+                # elif len(extra_cards) > 1:
+                #     first_card_back = extra_cards[1]
+                #     first_card_back.move(20, 210)
+                # print(card.card)
+                card.move(20, 180 + (30 * i))
+                card.position = (card.x(), card.y())
+                card.flip()
+                card.raise_()
+                i += 1
+        elif not self.is_flipped and not self.is_covered():
             # Prepares card for moving
             self.is_moving = True
             self.raise_()
@@ -71,18 +115,19 @@ class CardImage(QLabel):
     def mouseMoveEvent(self, ev: QtGui.QMouseEvent) -> None:
         if self.is_moving:
             # Moves the center of the top of card to the mouse
-            self.move(self.mapToParent(ev.pos().__add__(QPoint(-50, -20))))
+            self.move(self.mapToParent(ev.pos().__add__(QPoint(-50, -30))))
 
             # Moves the cards below the card
             times_to_add = 0
             for card in self.cards_below:
-                card.move(self.mapToParent(ev.pos().__add__(QPoint(-50, 20 * times_to_add))))
+                card.move(self.mapToParent(ev.pos().__add__(QPoint(-50, 30 * times_to_add))))
                 times_to_add += 1
 
-    # TODO: Last thing to do is to cycle through the extra pile
+    # TODO: Last thing to do is to cycle through the extra pile and end the game
     def mouseReleaseEvent(self, ev: QtGui.QMouseEvent) -> None:
-        self.is_moving = False
-        prev_location = (self.position[0], self.position[1])
+        if not self.is_moving:
+            return
+        print("Released!")
 
         # Searches for the closest card in the nearest pile
         closest_card = None
@@ -122,14 +167,14 @@ class CardImage(QLabel):
         moved = False
         if closest_card is not None and not laying_on_suits:
             # Moves the card to its new location
-            self.move(closest_card.x(), closest_card.y() + 20)
-            self.position = (closest_card.x(), closest_card.y() + 20)
+            self.move(closest_card.x(), closest_card.y() + 30)
+            self.position = (closest_card.x(), closest_card.y() + 30)
 
             # Moves all the cards below to their new location
             times_to_add = 1
             for card in self.cards_below:
                 times_to_add += 1
-                prev_pos = closest_card.pos().__add__(QPoint(0, 20 * times_to_add))
+                prev_pos = closest_card.pos().__add__(QPoint(0, 30 * times_to_add))
                 card.move(prev_pos)
                 card.position = (prev_pos.x(), prev_pos.y())
 
@@ -153,10 +198,11 @@ class CardImage(QLabel):
                         times_to_add = 0
                         for card in self.cards_below:
                             times_to_add += 1
-                            prev_pos = self.pos().__add__(QPoint(0, 20 * times_to_add))
-                            card.move(prev_pos)
-                            card.position = (prev_pos.x(), prev_pos.y())
+                            card.move(self.pos().__add__(QPoint(0, 30 * times_to_add)))
+                            print(card.pos())
+                            card.position = (card.x(), card.y())
 
+                        self.cards_below.clear()
                         moved = True
 
         # Handles placing on suits piles
@@ -167,11 +213,11 @@ class CardImage(QLabel):
                     self.position = (self.x(), self.y())
                     closest_card.setParent(None)
                     moved = True
-
-                if self.card.face.value - closest_card.card.face.value == 1:
+                elif self.card.face.value - closest_card.card.face.value == 1:
                     self.move(closest_card.x(), closest_card.y())
                     self.position = (self.x(), self.y())
                     moved = True
+                # TODO: Check each suit pile to determine if all are full, then end if they are
             except:
                 pass
 
@@ -183,27 +229,24 @@ class CardImage(QLabel):
             self.cards_below.clear()
             return
 
-        # Flips next card
-        extra_card_pulled = False
-        for card in self.parent().findChildren(CardImage):
-            if prev_location[0] == card.x():
-                if prev_location[1] - 20 == card.y() and card.is_flipped:
-                    card.flip()
+        # Cycles next card if not the first pull
+        extra_cards = self.solitaire_solver.extra_cards
+        if extra_cards.__contains__(self):
+            if len(extra_cards) > 3:
+                if extra_cards[3].y() == 20:
+                    self.solitaire_solver.extra_cards.remove(self)
                     return
-                elif card.x() < 120:
-                    # Handles Extra Card Pull
-                    card.move(card.pos().__add__(QPoint(0, 20)))
-                    card.position = (card.x(), card.y())
-                    if not extra_card_pulled:
-                        new_card = CardImage(self.solitaire_solver.s_deck.current_extra(),
-                                             self.parent().findChild(QWidget, 'cards'), card,
-                                             self.solitaire_solver, False)
-                        new_card.move(card.pos().__add__(QPoint(0, -40)))
-                        new_card.position = (new_card.x(), new_card.y())
 
-                        if self.solitaire_solver.s_deck.extra.__contains__(self.card):
-                            self.solitaire_solver.s_deck.extra.remove(self.card)
-                        extra_card_pulled = True
+                third_card_back = extra_cards[3]
+                third_card_back.move(20, 180)
+                third_card_back.position = (20, 180)
 
-                        # Delete the card that was pulled from s_deck
-                    continue
+                second_card_back = extra_cards[2]
+                second_card_back.move(20, 210)
+                second_card_back.position = (20, 210)
+
+                first_card_back = extra_cards[1]
+                first_card_back.move(20, 240)
+                first_card_back.position = (20, 240)
+
+            self.solitaire_solver.extra_cards.remove(self)

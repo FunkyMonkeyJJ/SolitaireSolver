@@ -33,11 +33,17 @@ class SolitaireDeck:
         self.diamonds = Pile([])
 
     def current_extra(self):
+        return self.extra[self.extra_iter]
+
+    def draw_extra(self):
         if self.extra_iter >= len(self.extra):
             self.extra_iter = 0
         next_card = self.extra[self.extra_iter]
         self.extra_iter += 1
         return next_card
+
+    def reset_extra(self):
+        self.extra_iter = 0
 
     def __str__(self):
         return super().__str__()
