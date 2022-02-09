@@ -58,9 +58,6 @@ class CardImage(QLabel):
             extra_cards = self.solitaire_solver.draw_pile
             next_three = extra_cards.draw_three()
 
-            # print(len(next_three))
-            # print(len(extra_cards))
-            # Might need to pop and move the card around because it is being moved in next_three, but not extra_cards
             if len(next_three) == 2 and len(extra_cards) > 2:
                 # Add one card back to the next three
                 next_three.insert(0, extra_cards[2])
@@ -120,8 +117,9 @@ class CardImage(QLabel):
 
     # TODO: End the game by checking if there is a King in each suit pile
     # TODO: Flip the cards below the moved card, if in the playing field
-        # Note: This should be done after transfer from Pile to Stack (Rename to Pile)
-    # TODO: Can't lay down 3 diamonds on 2 diamonds in suit pile, for some reason
+        # Note: This should be done after transfer from Pile to Stack
+    # TODO: Can't lay down 3 diamonds on 2 diamonds in suit pile,
+    #  for some reason
     def mouseReleaseEvent(self, ev: QtGui.QMouseEvent) -> None:
         if not self.is_moving:
             return
@@ -215,7 +213,8 @@ class CardImage(QLabel):
                     self.move(closest_card.x(), closest_card.y())
                     self.position = (self.x(), self.y())
                     moved = True
-                # TODO: Check each suit pile to determine if all are full, then end if they are
+                # TODO: Check each suit pile to determine if all are full,
+                #  then end if they are
             except:
                 pass
 

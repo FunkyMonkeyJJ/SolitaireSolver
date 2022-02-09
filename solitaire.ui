@@ -29,7 +29,7 @@
       <height>670</height>
      </rect>
     </property>
-    <widget class="QLabel" name="extra_card2">
+    <widget class="QLabel" name="draw_card2">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -100,7 +100,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card3">
+    <widget class="QLabel" name="draw_card3">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -134,7 +134,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card1">
+    <widget class="QLabel" name="draw_card1">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1213,7 +1213,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card4">
+    <widget class="QLabel" name="draw_card4">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1247,7 +1247,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card5">
+    <widget class="QLabel" name="draw_card5">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1281,7 +1281,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card6">
+    <widget class="QLabel" name="draw_card6">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1315,7 +1315,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card7">
+    <widget class="QLabel" name="draw_card7">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1349,7 +1349,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card8">
+    <widget class="QLabel" name="draw_card8">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1383,7 +1383,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card9">
+    <widget class="QLabel" name="draw_card9">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1417,7 +1417,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card10">
+    <widget class="QLabel" name="draw_card10">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1451,7 +1451,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card11">
+    <widget class="QLabel" name="draw_card11">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1485,7 +1485,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card12">
+    <widget class="QLabel" name="draw_card12">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1519,7 +1519,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card13">
+    <widget class="QLabel" name="draw_card13">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1553,7 +1553,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card14">
+    <widget class="QLabel" name="draw_card14">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1587,7 +1587,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card15">
+    <widget class="QLabel" name="draw_card15">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1621,7 +1621,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card16">
+    <widget class="QLabel" name="draw_card16">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1655,7 +1655,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card17">
+    <widget class="QLabel" name="draw_card17">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1689,7 +1689,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card18">
+    <widget class="QLabel" name="draw_card18">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1723,7 +1723,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card19">
+    <widget class="QLabel" name="draw_card19">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1757,7 +1757,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card20">
+    <widget class="QLabel" name="draw_card20">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1791,7 +1791,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card21">
+    <widget class="QLabel" name="draw_card21">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1825,7 +1825,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card22">
+    <widget class="QLabel" name="draw_card22">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1859,7 +1859,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card23">
+    <widget class="QLabel" name="draw_card23">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1893,7 +1893,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="extra_card24">
+    <widget class="QLabel" name="draw_card24">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1927,7 +1927,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="extra_cards_button">
+    <widget class="QPushButton" name="draw_cards_button">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1946,8 +1946,8 @@
       <string>Reset</string>
      </property>
     </widget>
-    <zorder>extra_cards_button</zorder>
-    <zorder>extra_card24</zorder>
+    <zorder>draw_cards_button</zorder>
+    <zorder>draw_card24</zorder>
     <zorder>card1</zorder>
     <zorder>card2</zorder>
     <zorder>card3</zorder>
@@ -1980,29 +1980,29 @@
     <zorder>hearts</zorder>
     <zorder>clubs</zorder>
     <zorder>diamonds</zorder>
-    <zorder>extra_card6</zorder>
-    <zorder>extra_card8</zorder>
-    <zorder>extra_card23</zorder>
-    <zorder>extra_card22</zorder>
-    <zorder>extra_card21</zorder>
-    <zorder>extra_card20</zorder>
-    <zorder>extra_card19</zorder>
-    <zorder>extra_card18</zorder>
-    <zorder>extra_card17</zorder>
-    <zorder>extra_card16</zorder>
-    <zorder>extra_card15</zorder>
-    <zorder>extra_card14</zorder>
-    <zorder>extra_card13</zorder>
-    <zorder>extra_card12</zorder>
-    <zorder>extra_card11</zorder>
-    <zorder>extra_card10</zorder>
-    <zorder>extra_card9</zorder>
-    <zorder>extra_card7</zorder>
-    <zorder>extra_card5</zorder>
-    <zorder>extra_card4</zorder>
-    <zorder>extra_card3</zorder>
-    <zorder>extra_card2</zorder>
-    <zorder>extra_card1</zorder>
+    <zorder>draw_card6</zorder>
+    <zorder>draw_card8</zorder>
+    <zorder>draw_card23</zorder>
+    <zorder>draw_card22</zorder>
+    <zorder>draw_card21</zorder>
+    <zorder>draw_card20</zorder>
+    <zorder>draw_card19</zorder>
+    <zorder>draw_card18</zorder>
+    <zorder>draw_card17</zorder>
+    <zorder>draw_card16</zorder>
+    <zorder>draw_card15</zorder>
+    <zorder>draw_card14</zorder>
+    <zorder>draw_card13</zorder>
+    <zorder>draw_card12</zorder>
+    <zorder>draw_card11</zorder>
+    <zorder>draw_card10</zorder>
+    <zorder>draw_card9</zorder>
+    <zorder>draw_card7</zorder>
+    <zorder>draw_card5</zorder>
+    <zorder>draw_card4</zorder>
+    <zorder>draw_card3</zorder>
+    <zorder>draw_card2</zorder>
+    <zorder>draw_card1</zorder>
    </widget>
   </widget>
  </widget>

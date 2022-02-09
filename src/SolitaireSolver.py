@@ -2,10 +2,9 @@ import sys
 
 from PyQt5 import uic
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
+from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from Deck import *
-from SolitaireDeck import *
 from Stack import *
 
 
@@ -24,33 +23,42 @@ class SolitaireSolver(QMainWindow):
         super().__init__()
         uic.loadUi('solitaire.ui', self)
 
-        deck = Deck().shuffle()
-        self.s_deck = SolitaireDeck(deck)
-
         self.setMaximumSize(self.size())
         self.setWindowIcon(QIcon('resources\\solitaire_icon.png'))
         self.setWindowTitle('Solitaire Solver')
 
-        # Generates and replaces each QLabel in the 7 piles
+        deck = Deck().shuffle()
+
+        # Creates each of the 7 Stacks for the playing field
+        self.stacks = []
+        for i in range(7):
+            self.stacks.append(Stack())
+
+        # Generates and replaces each QLabel in the 7 playing field Stacks
         for i in range(28):
             qlabel_card = self.findChild(QLabel, 'card' + (i + 1).__str__())
+            card_image = CardImage(deck.pop(), self.cards, qlabel_card, self)
+
             pile_index = find_pile_index(i)
-            pile = self.s_deck.piles[pile_index].pop()
-            card_image = CardImage(pile, self.cards, qlabel_card, self)
-            if len(self.s_deck.piles[pile_index]) == 0:
+            self.stacks[pile_index].append(card_image)
+            if len(self.stacks[pile_index]) == pile_index + 1:
                 card_image.flip()
 
-        # Generates and replaces each QLabel in the extra pile
+        # Generates and replaces each QLabel in the draw pile Stack
         self.draw_pile = Stack()
         for i in range(24):
-            qlabel_card = self.findChild(
-                QLabel, 'extra_card' + (i + 1).__str__())
-            extra_card = self.s_deck.draw_extra()
-            card_image = CardImage(extra_card, self.cards, qlabel_card, self)
+            draw_card_str = 'draw_card' + (i + 1).__str__()
+            qlabel_card = self.findChild(QLabel, draw_card_str)
+            card_image = CardImage(deck.pop(), self.cards, qlabel_card, self)
             self.draw_pile.append(card_image)
-        print(self.draw_pile)
 
-        self.extra_cards_button.clicked.connect(self.reset_extra_cards)
+        self.draw_cards_button.clicked.connect(self.reset_extra_cards)
+
+        # Stacks where the cards go when they are found
+        self.spades = Stack()
+        self.hearts = Stack()
+        self.clubs = Stack()
+        self.diamonds = Stack()
 
         self.show()
 
