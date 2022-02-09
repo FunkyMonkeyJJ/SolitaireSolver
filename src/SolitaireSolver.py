@@ -41,32 +41,27 @@ class SolitaireSolver(QMainWindow):
                 card_image.flip()
 
         # Generates and replaces each QLabel in the extra pile
-        self.extra_cards = Stack()
+        self.draw_pile = Stack()
         for i in range(24):
-            qlabel_card = self.findChild(QLabel, 'extra_card' + (i + 1).__str__())
+            qlabel_card = self.findChild(
+                QLabel, 'extra_card' + (i + 1).__str__())
             extra_card = self.s_deck.draw_extra()
             card_image = CardImage(extra_card, self.cards, qlabel_card, self)
-            self.extra_cards.append(card_image)
-            # if i == 23:
-            #     self.extra_cards.starting_card = card_image
-            #     print(card_image.card)
-        print(self.extra_cards)
+            self.draw_pile.append(card_image)
+        print(self.draw_pile)
 
         self.extra_cards_button.clicked.connect(self.reset_extra_cards)
 
         self.show()
 
     def reset_extra_cards(self):
-        print(self.extra_cards)
-        temp_head = self.extra_cards.tail
-        while temp_head is not None:
-            card = temp_head.value
+        self.draw_pile.reset()
+        temp_tail = self.draw_pile.tail
+        while temp_tail is not None:
+            card = temp_tail.value
             card.move(20, 20)
             card.flip()
-            temp_head = temp_head.next
-        # for card in self.extra_cards:
-        #     card.move(20, 20)
-        #     card.flip()
+            temp_tail = temp_tail.next
 
 
 if __name__ == '__main__':
