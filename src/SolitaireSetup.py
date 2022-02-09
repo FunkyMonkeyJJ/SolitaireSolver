@@ -18,7 +18,7 @@ def find_pile_index(card_num):
     return piles.get(card_num) - 1
 
 
-class SolitaireSolver(QMainWindow):
+class SolitaireSetup(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('solitaire.ui', self)
@@ -74,5 +74,5 @@ class SolitaireSolver(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    SolitaireSolver()
+    SolitaireSetup()
     sys.exit(app.exec_())
